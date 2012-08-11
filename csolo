@@ -1,23 +1,47 @@
 #!/bin/bash
 
-SOLO_BIN="/usr/local/bin/chef-solo"
-SOLO_LOG_LEVEL="info"
-SOLO_CONFIG="$HOME/.chef/solo.rb"
-SOLO_JSON_PERSONAL="$HOME/.chef/solo.json"
-SOLO_JSON_SYSTEM="$HOME/.chef/solo.system.json"
+# First we need to establish whether we can run. We need chef-solo
+# and git to get going.
+# I am hardcoding Ubuntu paths here. Also, I am assuming a chef
+# installation through rubygems. Rubygems itself will come from
+# the Ubuntu Ruby package.
 
 SOLO_SET=""
-
 if [ "$#" -lt "1" ]; then
   SOLO_SET="personal"
 else
   SOLO_SET="$1"
 fi
 
+BIN_SOLO="/usr/local/bin/chef-solo"
+BIN_GIT="/usr/bin/git"
+
+if [ "$SOLO_SET" == "init" ]; then
+  echo "[+] Initializing ..."
+  # Make sure that we have the essentials.
+  if [ ! -x "$BIN_GIT" ]; then
+    sudo apt-get install git
+  fi
+  if [ ! -x "$BIN_SOLO" ]; then
+    sudo apt-get install ruby1.9.1 ruby1.9.1-dev build-essential
+    sudo gem install chef -V
+  fi
+fi
+
+if [ ! -x "$BIN_GIT" -o ! -x "$BIN_SOLO" ]; then
+  echo "[-] Did not find some binaries. Please run csolo init."
+  exit 1
+fi
+
+SOLO_LOG_LEVEL="info"
+SOLO_CONFIG="$HOME/.chef/solo.rb"
+SOLO_JSON_PERSONAL="$HOME/.chef/solo.json"
+SOLO_JSON_SYSTEM="$HOME/.chef/solo.system.json"
+
 if [ "$SOLO_SET" == "personal" ]; then
-  $SOLO_BIN -l $SOLO_LOG_LEVEL -c $SOLO_CONFIG -j $SOLO_JSON_PERSONAL
+  $BIN_SOLO -l $SOLO_LOG_LEVEL -c $SOLO_CONFIG -j $SOLO_JSON_PERSONAL
 elif [ "$SOLO_SET" == "system" ]; then
-  sudo $SOLO_BIN -l $SOLO_LOG_LEVEL -c $SOLO_CONFIG -j $SOLO_JSON_SYSTEM
+  sudo $BIN_SOLO -l $SOLO_LOG_LEVEL -c $SOLO_CONFIG -j $SOLO_JSON_SYSTEM
 else
   echo "[-] Please provide an option: 'system' or 'personal'."
   exit 1
