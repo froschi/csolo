@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SOLO_BIN="/usr/local/bin/chef-solo"
+SOLO_LOG_LEVEL="info"
+SOLO_CONFIG="$HOME/.chef/solo.rb"
+SOLO_JSON_PERSONAL="$HOME/.chef/solo.json"
+SOLO_JSON_SYSTEM="$HOME/.chef/solo.system.json"
+
+SOLO_SET=""
+
+if [ "$#" -lt "1" ]; then
+  SOLO_SET="personal"
+else
+  SOLO_SET="$1"
+fi
+
+if [ "$SOLO_SET" == "personal" ]; then
+  $SOLO_BIN -l $SOLO_LOG_LEVEL -c $SOLO_CONFIG -j $SOLO_JSON_PERSONAL
+elif [ "$SOLO_SET" == "system" ]; then
+  sudo $SOLO_BIN -l $SOLO_LOG_LEVEL -c $SOLO_CONFIG -j $SOLO_JSON_SYSTEM
+else
+  echo "[-] Please provide an option: 'system' or 'personal'."
+  exit 1
+fi
