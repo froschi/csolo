@@ -19,3 +19,20 @@ $ csolo system
 This will invoke `chef-solo` with the rules file in `$HOME/.chef/solo.system.json`. It will run using `sudo`, because this rules file makes sure that the software packages that I rely on are installed.
 
 If no argument is provided, `csolo` will run as `csolo personal`.
+
+# Roadmap
+
+I have two goals for `csolo`.
+
+First, I want to be able to use it to bootstrap my setup on a new Ubuntu workstation. For that, I will implement an `init` argument, which sets up and downloads the minimal set of dependencies "by hand", using calls to `apt-get` and such. I imagine the workflow for that to look something like this:
+
+~~~ sh
+$ mkdir -p $HOME/scm/code
+$ cd HOME/scm/code
+$ git clone git://github.com/froschi/csolo.git
+$ csolo/csolo init
+$ csolo/csolo system
+$ csolo/csolo personal
+~~~
+
+Then I want to be able to switch to the maintenance phase, which would just consist of calls to `csolo system` or `csolo personal` after I pushed changes to any of the github repositories involved.
