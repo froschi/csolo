@@ -26,6 +26,8 @@ if [ "$SOLO_SET" == "init" ]; then
     sudo apt-get install ruby1.9.1 ruby1.9.1-dev build-essential
     sudo gem install chef -V
   fi
+  # Create scm directory
+  mkdir -p $HOME/scm/{code,chef}
   # Create chef directories
   if [ ! -d $HOME/.chef/solo ]; then
     mkdir -p $HOME/.chef/solo
