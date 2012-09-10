@@ -32,6 +32,7 @@ if [ "$SOLO_SET" == "init" ]; then
   if [ ! -d $HOME/.chef/solo ]; then
     mkdir -p $HOME/.chef/solo
   fi
+  exit 0
 fi
 
 if [ ! -x "$BIN_GIT" -o ! -x "$BIN_SOLO" ]; then
