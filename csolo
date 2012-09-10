@@ -27,7 +27,7 @@ if [ "$SOLO_SET" == "init" ]; then
     sudo gem install chef -V
   fi
   # Create scm directory
-  mkdir -p $HOME/scm/{code,chef}
+  mkdir -p $HOME/scm/{code,chef/cookbooks}
   # Create chef directories
   if [ ! -d $HOME/.chef/solo ]; then
     mkdir -p $HOME/.chef/solo
