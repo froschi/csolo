@@ -29,6 +29,7 @@ if [ "$SOLO_SET" == "init" ]; then
   # Create directory from where we can run csolo in the future
   mkdir -p $HOME/local/bin
   cp "$0" $HOME/local/bin
+  echo '    Make sure that HOME/local/bin is in your $PATH.'
   # Create scm directory
   mkdir -p $HOME/scm/{code,chef/cookbooks}
   # Create chef directories
