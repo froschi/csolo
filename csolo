@@ -24,6 +24,8 @@ if [ "$SOLO_SET" == "init" ]; then
   fi
   if [ ! -x "$BIN_SOLO" ]; then
     sudo apt-get install ruby1.9.1 ruby1.9.1-dev build-essential
+    sudo update-alternatives --set ruby /usr/bin/ruby1.9.1
+    sudo update-alternatives --set gem /usr/bin/gem1.9.1
     sudo gem install chef rubyzip -V
   fi
   # Create directory from where we can run csolo in the future.
