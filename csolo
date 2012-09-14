@@ -26,9 +26,12 @@ if [ "$SOLO_SET" == "init" ]; then
     sudo apt-get install ruby1.9.1 ruby1.9.1-dev build-essential
     sudo gem install chef -V
   fi
-  # Create directory from where we can run csolo in the future
+  # Create directory from where we can run csolo in the future.
+  # Also, copy csolo there. Make a backup if it already exists
   mkdir -p $HOME/local/bin
-  cp "$0" $HOME/local/bin
+  if [ "$0" != "$HOME/local/bin/csolo" ]; then
+    cp --backup=numbered "$0" $HOME/local/bin
+  fi
   echo '    Make sure that HOME/local/bin is in your $PATH.'
   # Create scm directory
   mkdir -p $HOME/scm/{code,chef/cookbooks}
