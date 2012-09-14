@@ -43,7 +43,7 @@ if [ "$SOLO_SET" == "init" ]; then
     cp --backup=numbered solo.rb $HOME/.chef/
   fi
   if [ -f solo.json ]; then
-    cp --backup=numbered solo.rb $HOME/.chef/
+    cp --backup=numbered solo.json $HOME/.chef/
   fi
   exit 0
 fi
