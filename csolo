@@ -39,6 +39,9 @@ if [ "$SOLO_SET" == "init" ]; then
   if [ ! -d $HOME/.chef/solo/cookbooks ]; then
     mkdir -p $HOME/.chef/solo/cookbooks
   fi
+  if [ -f solo.rb ]; then
+    cp --backup=numbered solo.rb $HOME/.chef/
+  fi
   exit 0
 fi
 
