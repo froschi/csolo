@@ -45,6 +45,9 @@ if [ "$SOLO_SET" == "init" ]; then
   if [ -f solo.json ]; then
     cp --backup=numbered solo.json $HOME/.chef/
   fi
+  if [ -f solo.system.json ]; then
+    cp --backup=numbered solo.system.json $HOME/.chef/
+  fi
   echo "[+] Cloning froschi default cookbook."
   if [ ! -d $HOME/scm/chef/cookbooks/froschi ]; then
     git clone \
