@@ -28,6 +28,8 @@ if [ "$SOLO_SET" == "init" ]; then
     sudo update-alternatives --set gem /usr/bin/gem1.9.1
     sudo gem install chef rubyzip -V
   fi
+  # Create the directory which will contain cloned repos etc
+  mkdir -p $HOME/.csolo
   # Create directory from where we can run csolo in the future.
   # Also, copy csolo there. Make a backup if it already exists
   mkdir -p $HOME/local/bin
