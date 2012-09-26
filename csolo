@@ -46,6 +46,9 @@ if [ "$SOLO_SET" == "init" ]; then
   if [ ! -d $HOME/.chef/solo/cache ]; then
     mkdir -p $HOME/.chef/solo/cache
   fi
+  if [ ! -d $HOME/.chef/solo/cache/backup ]; then
+    mkdir -p $HOME/.chef/solo/cache/backup
+  fi
   if [ -f solo.rb ]; then
     cp --backup=numbered solo.rb $HOME/.chef/
   fi
