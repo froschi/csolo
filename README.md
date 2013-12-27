@@ -2,6 +2,8 @@
 
 csolo is the first piece in the puzzle which I like to call my personal configuration management. It's essentially nothing more than a glorified wrapper of chef-solo.
 
+*Note*: I have not touched this in more than a year. And I have not used it in more than a year. I just blindly executed the thing on my laptop and at least it does not seem to have destrpyed anything. Be warned that your experience may be wildly different.
+
 # Usage
 
 Currently, everything is hard-coded (while developing). Edit the variables in the script to suit your needs.
