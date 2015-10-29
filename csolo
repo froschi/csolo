@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# First we need to establish whether we can run. We need chef-solo
-# and git to get going.
-# I am hardcoding Ubuntu paths here. Also, I am assuming a chef
-# installation through rubygems. Rubygems itself will come from
-# the Ubuntu Ruby package.
+# We need two things: chef-solo and git.
+# Currently, we don't try to install either for you.
 
 SOLO_SET=""
 if [ "$#" -lt "1" ]; then
@@ -13,21 +10,26 @@ else
   SOLO_SET="$1"
 fi
 
-BIN_SOLO="/usr/local/bin/chef-solo"
-BIN_GIT="/usr/bin/git"
+BIN_GIT="`which git`"
+if [ $? -ne 0 ]; then
+  echo "[-] Could not find git"
+  exit 1;
+else
+  GIT_VERSION="`git version | cut -d' ' -f3`"
+  echo "[+] Using git $GIT_VERSION from $BIN_GIT"
+fi
+
+BIN_SOLO="`which chef-solo`"
+if [ $? -ne 0 ]; then
+  echo "[-] Could not find chef-solo"
+  exit 1;
+else
+  SOLO_VERSION="`chef-solo --version | cut -d' ' -f2`"
+  echo "[+] Using chef-solo $SOLO_VERSION from $BIN_SOLO"
+fi
 
 if [ "$SOLO_SET" == "init" ]; then
   echo "[+] Initializing ..."
-  # Make sure that we have the essentials.
-  if [ ! -x "$BIN_GIT" ]; then
-    sudo apt-get install git
-  fi
-  if [ ! -x "$BIN_SOLO" ]; then
-    sudo apt-get install ruby1.9.1 ruby1.9.1-dev build-essential
-    sudo update-alternatives --set ruby /usr/bin/ruby1.9.1
-    sudo update-alternatives --set gem /usr/bin/gem1.9.1
-    sudo gem install chef rubyzip -V
-  fi
   # Create the directory which will contain cloned repos etc
   mkdir -p $HOME/.csolo
   # Create directory from where we can run csolo in the future.
@@ -70,11 +72,6 @@ if [ "$SOLO_SET" == "init" ]; then
       $HOME/.chef/solo/cookbooks/froschi
   fi
   exit 0
-fi
-
-if [ ! -x "$BIN_GIT" -o ! -x "$BIN_SOLO" ]; then
-  echo "[-] Did not find some binaries. Please run csolo init."
-  exit 1
 fi
 
 SOLO_LOG_LEVEL="info"
