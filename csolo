@@ -39,6 +39,7 @@ if [ "$SOLO_SET" == "init" ]; then
     cp --backup=numbered "$0" $HOME/local/bin
   fi
   echo '    Make sure that HOME/local/bin is in your $PATH.'
+  echo '    Make sure you have the zip gem installed.'
   # Create scm directory
   mkdir -p $HOME/scm/{code,chef/cookbooks}
   # Create chef directories
